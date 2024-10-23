@@ -1,0 +1,22 @@
+{
+  "extends": [
+    "react-app"
+  ],
+  "globals": {
+    "chrome": "readonly"
+  },
+  "plugins": [
+    "prettier",
+    "simple-import-sort"
+  ],
+  "rules": {
+    "prettier/prettier": "error",
+    "sort-imports": "off",
+    "import/order": "off",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "simple-import-sort/imports": "error",
+    "import/no-duplicates": "error",
+    "indent": ["error", 2]
+  }
+}
