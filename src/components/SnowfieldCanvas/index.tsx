@@ -3,11 +3,7 @@ import { useEffect, useRef } from 'react';
 import { SNOWFLAKES_LIMIT } from '../../consts';
 import { animate, createSnowflake } from '../../utils/canvas';
 
-function getRandomNumber(min: number, max: number) {
-  return Math.random() * (max - min) + min;
-}
-
-const Snowfield = () => {
+const SnowfieldCanvas = () => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -33,4 +29,4 @@ const Snowfield = () => {
   return <canvas ref={canvasRef} />;
 };
 
-export default Snowfield;
+export default SnowfieldCanvas;

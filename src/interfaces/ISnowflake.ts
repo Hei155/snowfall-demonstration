@@ -3,6 +3,6 @@ export interface ISnowflake {
   y: number;
   r: number;
   ySpeed: number;
-  sway: number;
+  xSpeed: number;
   endX: number | null;
 }

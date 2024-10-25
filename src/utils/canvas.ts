@@ -1,35 +1,27 @@
-import { MAX_SNOWFLAKE_Y_SPEED, SNOWFLAKE_MAX_SIZE } from '../consts';
+import snoflakeImg from '../assets/images/snowflake.png';
+import {
+  MAX_SNOWFLAKE_X_SPEED,
+  MAX_SNOWFLAKE_Y_SPEED,
+  SNOWFLAKE_MAX_SIZE,
+} from '../consts';
 import { ISnowflake } from '../interfaces/ISnowflake';
-
-const changeDirectionForGroup = (
-  snowflakes: ISnowflake[],
-  target: ISnowflake,
-  sway: number
-) => {
-  const { x: targetX, y: targetY } = target;
-  snowflakes.forEach(({ x: currentX, y: currentY, sway: currentSway }) => {
-    if (
-      Math.abs(targetX - currentX) < 50 &&
-      Math.abs(targetY - currentY) < 50
-    ) {
-      currentSway = sway;
-      currentX += sway;
-    }
-  });
-};
 
 export const createSnowflake = (): ISnowflake => {
   const r = Math.random() * SNOWFLAKE_MAX_SIZE + 1;
 
+  // Calm weather :)
+  const xSpeedDirection = Math.random() < 0.5 ? -1 : 1;
+
   const ySpeed = (r / SNOWFLAKE_MAX_SIZE) * MAX_SNOWFLAKE_Y_SPEED;
-  const sway = (r / SNOWFLAKE_MAX_SIZE) * (Math.random() - 0.5);
+  const xSpeed =
+    (r / SNOWFLAKE_MAX_SIZE) * MAX_SNOWFLAKE_X_SPEED * xSpeedDirection;
 
   return {
     x: Math.random() * document.documentElement.clientWidth,
     y: 0,
     r: r,
-    ySpeed: ySpeed,
-    sway: sway,
+    ySpeed,
+    xSpeed,
     endX: null,
   };
 };
@@ -45,40 +37,37 @@ const drawSnowflake = (
   ctx.closePath();
 };
 
-const updateSnowflake = (
-  snowflake: ISnowflake,
-  canvas: HTMLCanvasElement,
-  snowflakes: ISnowflake[]
-) => {
-  const isChangeDirection = Math.random() < 0.0001;
-  let currentSway = snowflake.sway;
+const updateSnowflake = (snowflake: ISnowflake, canvas: HTMLCanvasElement) => {
+  const isChangeDirection = Math.random() < 0.01;
+  let currentSway = snowflake.xSpeed;
 
+  // If there's a endX coordinate, smoothly change xSpeed to this value
   if (snowflake.endX) {
-    if (snowflake.sway === snowflake.endX) {
-      console.log('1');
+    if (snowflake.xSpeed === snowflake.endX) {
       snowflake.endX = null;
     } else {
-      //   console.log(Math.abs(snowflake.sway - snowflake.endX));
-      if (snowflake.endX !== undefined && snowflake.endX !== null) {
-        if (snowflake.sway < snowflake.endX) {
-          snowflake.sway += 0.01;
-        } else if (snowflake.sway > snowflake.endX) {
-          snowflake.sway -= 0.01;
-        }
+      if (snowflake.xSpeed < snowflake.endX) {
+        snowflake.xSpeed += 0.01;
+      } else {
+        snowflake.xSpeed -= 0.01;
       }
     }
   }
 
+  // Specifying final coordinates
   if (isChangeDirection) {
-    currentSway = snowflake.sway * -1;
-    // changeDirectionForGroup(snowflakes, snowflake, currentSway);
+    currentSway = snowflake.xSpeed * -1;
     snowflake.endX = currentSway;
   }
 
+  // Update speed of snowflake
   snowflake.y += snowflake.ySpeed;
-  snowflake.x += snowflake.sway;
-  //   snowflake.sway = currentSway;
-  if (snowflake.y > canvas.height) {
+  snowflake.x += snowflake.xSpeed;
+  if (
+    snowflake.y > canvas.height ||
+    snowflake.x > canvas.width ||
+    snowflake.x < 0
+  ) {
     Object.assign(snowflake, createSnowflake());
   }
 };
@@ -92,7 +81,7 @@ export const animate = (
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     snowflakes.forEach((snowflake) => {
-      updateSnowflake(snowflake, canvas, snowflakes);
+      updateSnowflake(snowflake, canvas);
       drawSnowflake(ctx, snowflake);
     });
 
