@@ -1,21 +1,42 @@
 import { Container, Sprite, Stage, useTick } from '@pixi/react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import snowflake from '../../assets/images/snowflake.png';
+import snowflakeImg from '../../assets/images/snowflake.png';
 import { SNOWFLAKES_LIMIT } from '../../consts';
 import { ISnowflake } from '../../interfaces/ISnowflake';
-import { createSnowflake } from '../../utils/canvas';
+import { createSnowflake, updateSnowflake } from '../../utils/canvas';
 
-let i = 0;
+const Wizard = ({ snowflake }: { snowflake: ISnowflake }) => {
+  const [currentY, setCurrentY] = useState(snowflake.y);
+  const [currentX, setCurrentX] = useState(snowflake.x);
+  const [currentSize, setCurrentSize] = useState(snowflake.r);
+  const [rotation, setRotation] = useState(0);
 
-const Wizard = ({ x, y }: { x: number; y: number }) => {
-  // useTick((delta) => {
-  //   i += 0.05 * delta;
-  //   setX(Math.sin(i) * 100);
-  //   setY(Math.sin(i / 1.5) * 100);
-  // });
-  console.log(x, y);
-  return <Sprite image={snowflake} x={x} y={y} width={20} height={20} />;
+  useTick((delta) => {
+    console.log(delta);
+    const currentSnowflake = updateSnowflake(snowflake, {
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight,
+    });
+    setCurrentX(currentSnowflake.x);
+    setCurrentY(currentSnowflake.y);
+    setCurrentSize(currentSnowflake.r * 3);
+    setRotation(rotation + 0.01 * delta);
+    // i += 0.05 * delta;
+    // setCurrentX((x) => (x += snowflake.xSpeed));
+    // setCurrentY((y) => (y += snowflake.ySpeed));
+  });
+  // console.log('y', y);
+  return (
+    <Sprite
+      rotation={rotation}
+      image={snowflakeImg}
+      x={currentX}
+      y={currentY}
+      width={currentSize}
+      height={currentSize}
+    />
+  );
 };
 
 const SnowfieldPixi = () => {
@@ -26,6 +47,7 @@ const SnowfieldPixi = () => {
       setSnowflakes((snowflakes) => [...snowflakes, createSnowflake()]);
     }
   }, []);
+  console.log(snowflakes);
   return (
     <Stage
       width={document.documentElement.clientWidth}
@@ -35,8 +57,8 @@ const SnowfieldPixi = () => {
         antialias: true,
       }}
     >
-      {snowflakes.map((snowflake) => (
-        <Wizard x={snowflake.x} y={snowflake.y} />
+      {snowflakes.map((snowflake, i) => (
+        <Wizard key={i} snowflake={snowflake} />
       ))}
     </Stage>
   );

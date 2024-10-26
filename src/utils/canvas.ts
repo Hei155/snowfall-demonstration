@@ -4,7 +4,7 @@ import {
   MAX_SNOWFLAKE_Y_SPEED,
   SNOWFLAKE_MAX_SIZE,
 } from '../consts';
-import { ISnowflake } from '../interfaces/ISnowflake';
+import { ISnowflake, IWindowSize } from '../interfaces/ISnowflake';
 
 export const createSnowflake = (): ISnowflake => {
   const r = Math.random() * SNOWFLAKE_MAX_SIZE + 1;
@@ -37,7 +37,11 @@ const drawSnowflake = (
   ctx.closePath();
 };
 
-const updateSnowflake = (snowflake: ISnowflake, canvas: HTMLCanvasElement) => {
+export const updateSnowflake = (
+  snowflake: ISnowflake,
+  windowSize: IWindowSize
+) => {
+  const { height, width } = windowSize;
   const isChangeDirection = Math.random() < 0.01;
   let currentSway = snowflake.xSpeed;
 
@@ -63,13 +67,10 @@ const updateSnowflake = (snowflake: ISnowflake, canvas: HTMLCanvasElement) => {
   // Update speed of snowflake
   snowflake.y += snowflake.ySpeed;
   snowflake.x += snowflake.xSpeed;
-  if (
-    snowflake.y > canvas.height ||
-    snowflake.x > canvas.width ||
-    snowflake.x < 0
-  ) {
+  if (snowflake.y > height || snowflake.x > width || snowflake.x < 0) {
     Object.assign(snowflake, createSnowflake());
   }
+  return snowflake;
 };
 
 export const animate = (

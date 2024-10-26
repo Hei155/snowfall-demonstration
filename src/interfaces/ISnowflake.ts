@@ -6,3 +6,8 @@ export interface ISnowflake {
   xSpeed: number;
   endX: number | null;
 }
+
+export interface IWindowSize {
+  width: number;
+  height: number;
+}
