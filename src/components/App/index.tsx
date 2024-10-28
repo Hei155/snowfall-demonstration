@@ -1,18 +1,17 @@
-import './styles.css';
+import { BrowserRouter } from 'react-router-dom';
 
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-
-import SnowfieldCanvas from '../SnowfieldCanvas';
-import SnowfieldPixi from '../SnowfieldPixi';
+import Paths from '../../routes';
+import LinkContainer from '../LinkContainer';
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/canvas" />} />
-        <Route path="/canvas" element={<SnowfieldCanvas />} />
-        <Route path="/pixi" element={<SnowfieldPixi />} />
-      </Routes>
+      <div className="App">
+        <LinkContainer />
+        <main>
+          <Paths />
+        </main>
+      </div>
     </BrowserRouter>
   );
 }

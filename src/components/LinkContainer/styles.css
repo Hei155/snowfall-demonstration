@@ -1,0 +1,23 @@
+.link-container {
+    top: 40px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 10px;
+}
+
+.link-container__link {
+    color: white;
+    font-size: 30px;
+    text-decoration: none;
+    transition: opacity ease-in-out .2s;
+}
+
+.link-container__link:hover {
+    opacity: .4;
+}
+
+.link-container__link_active {
+    color: orange;
+}

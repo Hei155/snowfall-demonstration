@@ -5,6 +5,7 @@ import { animate, createSnowflake } from '../../utils/canvas';
 
 const SnowfieldCanvas = () => {
   const canvasRef = useRef(null);
+  const animateRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -23,7 +24,18 @@ const SnowfieldCanvas = () => {
         snowflakes.push(createSnowflake());
       }
 
-      animate(ctx, canvas, snowflakes);
+      animateRef.current = animate(ctx, canvas, snowflakes);
+
+      const handleResize = () => {
+        canvas.height = document.documentElement.clientHeight;
+        canvas.width = document.documentElement.clientWidth;
+      };
+
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        cancelAnimationFrame(animateRef.current as number);
+      };
     }
   }, [canvasRef]);
   return <canvas ref={canvasRef} />;
