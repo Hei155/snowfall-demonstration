@@ -1,5 +1,6 @@
-import { CHANGE_X_DIRECTION_CHANCE, CHANGE_X_STEP } from '../consts';
-import { ISnowflake, IWindowSize } from '../interfaces/ISnowflake';
+import { CHANGE_X_DIRECTION_CHANCE, CHANGE_X_STEP } from 'consts';
+import { ISnowflake, IWindowSize } from 'interfaces/ISnowflake';
+
 import { createSnowflake } from './canvas';
 
 export const updateSnowflake = (

@@ -1,9 +1,9 @@
 import { Stage } from '@pixi/react';
+import { SNOWFLAKES_LIMIT } from 'consts';
+import { ISnowflake } from 'interfaces/ISnowflake';
 import { useEffect, useState } from 'react';
+import { createSnowflake } from 'utils/canvas';
 
-import { SNOWFLAKES_LIMIT } from '../../consts';
-import { ISnowflake } from '../../interfaces/ISnowflake';
-import { createSnowflake } from '../../utils/canvas';
 import Snowflake from './Snowflake';
 
 const SnowfieldPixi = () => {

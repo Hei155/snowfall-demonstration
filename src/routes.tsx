@@ -1,7 +1,6 @@
+import SnowfieldCanvas from 'components/SnowfieldCanvas';
+import SnowfieldPixi from 'components/SnowfieldPixi';
 import { Navigate, Route, Routes } from 'react-router-dom';
-
-import SnowfieldCanvas from './components/SnowfieldCanvas';
-import SnowfieldPixi from './components/SnowfieldPixi';
 
 const Paths = () => {
   return (

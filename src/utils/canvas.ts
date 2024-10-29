@@ -3,8 +3,9 @@ import {
   MAX_SNOWFLAKE_SIZE,
   MAX_SNOWFLAKE_X_SPEED,
   MAX_SNOWFLAKE_Y_SPEED,
-} from '../consts';
-import { ISnowflake } from '../interfaces/ISnowflake';
+} from 'consts';
+import { ISnowflake } from 'interfaces/ISnowflake';
+
 import { updateSnowflake } from './updateSnowflake';
 
 export const createSnowflake = (): ISnowflake => {

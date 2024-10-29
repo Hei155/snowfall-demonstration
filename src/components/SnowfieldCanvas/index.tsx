@@ -1,7 +1,6 @@
+import { SNOWFLAKES_LIMIT } from 'consts';
 import { useEffect, useRef } from 'react';
-
-import { SNOWFLAKES_LIMIT } from '../../consts';
-import { animate, createSnowflake } from '../../utils/canvas';
+import { animate, createSnowflake } from 'utils/canvas';
 
 const SnowfieldCanvas = () => {
   const canvasRef = useRef(null);

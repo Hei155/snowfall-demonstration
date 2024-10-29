@@ -1,9 +1,8 @@
 import { Sprite, useTick } from '@pixi/react';
+import snowflakeImg from 'assets/images/snowflake.png';
+import { ISnowflake } from 'interfaces/ISnowflake';
 import { useState } from 'react';
-
-import snowflakeImg from '../../../assets/images/snowflake.png';
-import { ISnowflake } from '../../../interfaces/ISnowflake';
-import { updateSnowflake } from '../../../utils/updateSnowflake';
+import { updateSnowflake } from 'utils/updateSnowflake';
 
 const Snowflake = ({ snowflake }: { snowflake: ISnowflake }) => {
   const [currentY, setCurrentY] = useState(snowflake.y);

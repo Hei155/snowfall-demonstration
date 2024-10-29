@@ -1,7 +1,6 @@
+import LinkContainer from 'components/LinkContainer';
 import { BrowserRouter } from 'react-router-dom';
-
-import Paths from '../../routes';
-import LinkContainer from '../LinkContainer';
+import Paths from 'routes';
 
 function App() {
   return (
