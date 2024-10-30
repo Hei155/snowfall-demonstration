@@ -1,6 +1,6 @@
+import { ISnowflake } from '@interfaces/Snowflake';
 import { Stage } from '@pixi/react';
 import { SNOWFLAKES_LIMIT } from 'consts';
-import { ISnowflake } from 'interfaces/ISnowflake';
 import { useEffect, useState } from 'react';
 import { createSnowflake } from 'utils/canvas';
 
@@ -18,6 +18,16 @@ const SnowfieldPixi = () => {
     for (let i = 0; i < SNOWFLAKES_LIMIT; i++) {
       setSnowflakes((snowflakes) => [...snowflakes, createSnowflake()]);
     }
+
+    const handleResize = () => {
+      setWidth(document.body.clientWidth);
+      setHeight(window.innerHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return (

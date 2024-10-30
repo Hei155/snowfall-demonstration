@@ -14,10 +14,10 @@
     transition: opacity ease-in-out .2s;
 }
 
-.link-container__link:hover {
-    opacity: .4;
+.link-container__link.active {
+    color: orange;
 }
 
-.link-container__link_active {
-    color: orange;
+.link-container__link:hover {
+    opacity: .4;
 }

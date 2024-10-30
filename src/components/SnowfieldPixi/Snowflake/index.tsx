@@ -1,6 +1,6 @@
+import { ISnowflake } from '@interfaces/Snowflake';
 import { Sprite, useTick } from '@pixi/react';
 import snowflakeImg from 'assets/images/snowflake.png';
-import { ISnowflake } from 'interfaces/ISnowflake';
 import { useState } from 'react';
 import { updateSnowflake } from 'utils/updateSnowflake';
 

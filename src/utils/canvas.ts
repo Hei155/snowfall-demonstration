@@ -1,10 +1,10 @@
+import { ISnowflake } from '@interfaces/Snowflake';
 import {
   INITIAL_X_DIRECTION_CHANCE,
   MAX_SNOWFLAKE_SIZE,
   MAX_SNOWFLAKE_X_SPEED,
   MAX_SNOWFLAKE_Y_SPEED,
 } from 'consts';
-import { ISnowflake } from 'interfaces/ISnowflake';
 
 import { updateSnowflake } from './updateSnowflake';
 

@@ -1,41 +1,39 @@
 import { SNOWFLAKES_LIMIT } from 'consts';
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { animate, createSnowflake } from 'utils/canvas';
 
 const SnowfieldCanvas = () => {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animateRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    if (canvasRef.current) {
-      const canvas = canvasRef.current as HTMLCanvasElement;
-      const ctx = canvas.getContext('2d');
+  useLayoutEffect(() => {
+    if (!canvasRef.current) return;
 
-      const height = document.documentElement.clientHeight;
-      const width = document.documentElement.clientWidth;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
-      canvas.height = height;
-      canvas.width = width;
+    const { clientHeight, clientWidth } = document.documentElement;
 
-      const snowflakes = [];
+    canvas.height = clientHeight;
+    canvas.width = clientWidth;
 
-      for (let i = 0; i < SNOWFLAKES_LIMIT; i++) {
-        snowflakes.push(createSnowflake());
-      }
+    const snowflakes = Array.from(
+      { length: SNOWFLAKES_LIMIT },
+      createSnowflake
+    );
 
-      animateRef.current = animate(ctx, canvas, snowflakes);
+    animateRef.current = animate(ctx, canvas, snowflakes);
 
-      const handleResize = () => {
-        canvas.height = document.documentElement.clientHeight;
-        canvas.width = document.documentElement.clientWidth;
-      };
+    const handleResize = () => {
+      canvas.height = document.documentElement.clientHeight;
+      canvas.width = document.documentElement.clientWidth;
+    };
 
-      window.addEventListener('resize', handleResize);
-      return () => {
-        window.removeEventListener('resize', handleResize);
-        cancelAnimationFrame(animateRef.current as number);
-      };
-    }
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animateRef.current as number);
+    };
   }, [canvasRef]);
   return <canvas ref={canvasRef} />;
 };

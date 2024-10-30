@@ -1,26 +1,16 @@
 import './styles.css';
 
-import { Link, useLocation } from 'react-router-dom';
-
-const linkClassName = 'link-container__link';
+import { NavLink } from 'react-router-dom';
 
 const LinkContainer = () => {
-  const location = useLocation();
-
   return (
     <div className="link-container">
-      <Link
-        className={`${linkClassName} ${location.pathname === '/pixi' && `${linkClassName}_active`}`}
-        to="/pixi"
-      >
+      <NavLink className="link-container__link" to="/pixi">
         PixiJS
-      </Link>
-      <Link
-        className={`${linkClassName} ${location.pathname === '/canvas' && `${linkClassName}_active`}`}
-        to="/canvas"
-      >
+      </NavLink>
+      <NavLink className="link-container__link" to="/canvas">
         Canvas
-      </Link>
+      </NavLink>
     </div>
   );
 };

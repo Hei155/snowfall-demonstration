@@ -1,5 +1,5 @@
+import { ISnowflake, IWindowSize } from '@interfaces/Snowflake';
 import { CHANGE_X_DIRECTION_CHANCE, CHANGE_X_STEP } from 'consts';
-import { ISnowflake, IWindowSize } from 'interfaces/ISnowflake';
 
 import { createSnowflake } from './canvas';
 
